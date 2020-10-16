@@ -59,13 +59,13 @@ client.connect(err => {
         return res.send({name: file.name, path:`/${file.name}`})
     })
     
-    const newImg = fs.readFileSync(filePath);
+    const newImg = req.files.file.data;
     const encImg = newImg.toString('base64');
 
     var image = {
       contentType: req.files.file.mimetype,
       size: req.files.file.size,
-      img: Buffer(encImg, 'base64')
+      img: Buffer.from(encImg, 'base64')
     }
 
     serviceCollection.insertOne({image, title, description})
@@ -168,13 +168,13 @@ client.connect(err => {
         return res.send({name: file.name, path:`/${file.name}`})
     })
 
-    const newReviewImg = fs.readFileSync(reviewFilePath);
+    const newReviewImg = req.files.file.data;
     const encReviewImg = newReviewImg.toString('base64');
 
     var image = {
       contentType: req.files.file.mimetype,
       size: req.files.file.size,
-      img: Buffer(encReviewImg, 'base64')
+      img: Buffer.from(encReviewImg, 'base64')
     }
 
     feedCollection.insertOne({image, name, designation, description})
